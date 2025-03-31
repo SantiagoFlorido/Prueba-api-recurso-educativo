@@ -1,0 +1,345 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "API de Talleres y Usuarios",
+      "version": "1.0.0",
+      "description": "Documentación para la API de gestión de talleres y usuarios"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:9000",
+            "description": "Servidor local"
+        },
+        {
+        "url": "https://tu-api-en-produccion.com",
+        "description": "Servidor de producción"
+        }
+    ],
+    "tags": [
+      {
+        "name": "Usuarios",
+        "description": "Operaciones con usuarios (estudiantes y docentes)"
+      },
+      {
+        "name": "Talleres",
+        "description": "Gestión de talleres disponibles"
+      },
+      {
+        "name": "Usuarios-Talleres",
+        "description": "Asignación y progreso de talleres por usuario"
+      }
+    ],
+    "paths": {
+      "/users": {
+        "get": {
+          "tags": ["Usuarios"],
+          "summary": "Obtener todos los usuarios",
+          "responses": {
+            "200": {
+              "description": "Lista de usuarios",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "id": 1,
+                      "nombre": "juan_perez",
+                      "rol": "estudiante"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Usuarios"],
+          "summary": "Crear un nuevo usuario",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nombre": {
+                      "type": "string",
+                      "example": "maria_gomez"
+                    },
+                    "contraseña": {
+                      "type": "string",
+                      "example": "password123"
+                    },
+                    "rol": {
+                      "type": "string",
+                      "enum": ["estudiante", "docente"],
+                      "example": "estudiante"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Usuario creado",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 2,
+                    "nombre": "maria_gomez",
+                    "rol": "estudiante"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/users/{id}": {
+        "get": {
+          "tags": ["Usuarios"],
+          "summary": "Obtener usuario por ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalles del usuario",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 1,
+                    "nombre": "juan_perez",
+                    "rol": "estudiante"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "tags": ["Usuarios"],
+          "summary": "Actualizar usuario",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "example": {
+                  "nombre": "juan_perez_actualizado"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Usuario actualizado"
+            }
+          }
+        },
+        "delete": {
+          "tags": ["Usuarios"],
+          "summary": "Eliminar usuario",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Usuario eliminado"
+            }
+          }
+        }
+      },
+      "/talleres": {
+        "get": {
+          "tags": ["Talleres"],
+          "summary": "Obtener todos los talleres",
+          "responses": {
+            "200": {
+              "description": "Lista de talleres",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "id": 1,
+                      "nombre_taller": "Programación en React"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "tags": ["Talleres"],
+          "summary": "Crear nuevo taller",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nombre_taller": {
+                      "type": "string",
+                      "example": "Node.js Avanzado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Taller creado",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 2,
+                    "nombre_taller": "Node.js Avanzado"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/usuarios-talleres": {
+        "post": {
+          "tags": ["Usuarios-Talleres"],
+          "summary": "Asignar taller a usuario",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id_usuario": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "id_taller": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "estado": {
+                      "type": "string",
+                      "enum": ["abierto", "finalizado"],
+                      "example": "abierto"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Asignación creada",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "id": 1,
+                    "id_usuario": 1,
+                    "id_taller": 1,
+                    "estado": "abierto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/usuarios-talleres/{id}/estado": {
+        "patch": {
+          "tags": ["Usuarios-Talleres"],
+          "summary": "Cambiar estado de taller para usuario",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer",
+                "description": "ID de la relación usuario-taller"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "estado": {
+                      "type": "string",
+                      "enum": ["abierto", "finalizado"],
+                      "example": "finalizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Estado actualizado"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Usuario": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "nombre": {
+              "type": "string"
+            },
+            "rol": {
+              "type": "string",
+              "enum": ["estudiante", "docente"]
+            }
+          }
+        },
+        "Taller": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "nombre_taller": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
