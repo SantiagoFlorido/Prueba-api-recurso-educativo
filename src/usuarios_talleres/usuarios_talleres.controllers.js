@@ -1,4 +1,4 @@
-const { UsuarioTaller } = require('../models/usuariosTalleres.models');
+const UsuarioTaller = require('../models/usuariosTalleres.models');
 
 const changeEstadoTallerUsuario = async (id_usuario_taller, estadoabierto, estadofinal) => {
     const data = await UsuarioTaller.update(

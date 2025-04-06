@@ -1,4 +1,4 @@
-const { Taller } = require('../models/talleres.models');
+const Taller  = require('../models/talleres.models');
 
 // Obtener todos los talleres
 const findAllTalleres = async () => {
