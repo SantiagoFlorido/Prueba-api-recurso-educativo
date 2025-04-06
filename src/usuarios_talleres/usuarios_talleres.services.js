@@ -2,12 +2,12 @@ const usuariosTalleresController = require('./usuarios_talleres.controllers');
 
 const updateEstadoTallerUsuario = (req, res) => {
     const { id_usuario_taller } = req.params;
-    const { estado } = req.body;
+    const { estadoabierto,estadofinal } = req.body;
 
-    usuariosTalleresController.changeEstadoTallerUsuario(id_usuario_taller, estado)
+    usuariosTalleresController.changeEstadoTallerUsuario(id_usuario_taller, estadoabierto, estadofinal)
         .then((data) => {
             if (data) {
-                res.status(200).json({ message: `Estado actualizado a: ${estado}` });
+                res.status(200).json({ message: `Estado actualizado a: ${estadoabierto, estadofinal}` });
             } else {
                 res.status(404).json({ message: 'Registro no encontrado' });
             }

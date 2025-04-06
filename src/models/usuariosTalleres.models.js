@@ -33,11 +33,18 @@ const UsuarioTaller = db.define('usuarios_talleres', {
             key: 'id'   
         }
     },
-    estado: {
+    estadoabierto: {
         type: DataTypes.STRING(20),
         allowNull: false,
         validate: {
-            isIn: [['abierto', 'finalizado', 'NoIniciado']]
+            isIn: [['noabierto', 'abierto']]
+        }
+    },
+    estadofinal: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        validate: {
+            isIn: [['nofinalizado', 'finalizado']]
         }
     }
 }, {
