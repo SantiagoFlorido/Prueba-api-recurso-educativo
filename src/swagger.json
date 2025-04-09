@@ -245,9 +245,14 @@
                       "type": "integer",
                       "example": 1
                     },
-                    "estado": {
+                    "estadoabierto": {
                       "type": "string",
-                      "enum": ["abierto", "finalizado"],
+                      "enum": ["noabierto", "abierto"],
+                      "example": "abierto"
+                    },
+                    "estadofinal": {
+                      "type": "string",
+                      "enum": ["nofinalizado", "finalizado"],
                       "example": "abierto"
                     }
                   }

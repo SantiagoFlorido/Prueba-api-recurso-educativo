@@ -1,5 +1,17 @@
 const usuariosTalleresController = require('./usuarios_talleres.controllers');
 
+const createUsuarioTaller = (req, res) => {
+    const { id_usuario, id_taller, estadoabierto, estadofinal } = req.body;
+
+    usuariosTalleresController.createRelacionUsuarioTaller(id_usuario, id_taller, estadoabierto, estadofinal)
+        .then((data) => {
+            res.status(201).json(data);
+        })
+        .catch((err) => {
+            res.status(400).json({ message: err.message });
+        });
+};
+
 const updateEstadoTallerUsuario = (req, res) => {
     const { id_usuario_taller } = req.params;
     const { estadoabierto,estadofinal } = req.body;
@@ -17,6 +29,8 @@ const updateEstadoTallerUsuario = (req, res) => {
         });
 };
 
+
 module.exports = {
+    createUsuarioTaller,
     updateEstadoTallerUsuario
 };
