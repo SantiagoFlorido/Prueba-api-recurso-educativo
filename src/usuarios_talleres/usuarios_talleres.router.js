@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const usuariosTalleresServices = require('./usuarios_talleres.services');
 
+// Ruta para obtener todas las relaciones usuario-taller
+router.get('/', usuariosTalleresServices.getAllUsuarioTaller);
+
 // Ruta para crear nueva relación usuario-taller
 router.post('/', usuariosTalleresServices.createUsuarioTaller);
 

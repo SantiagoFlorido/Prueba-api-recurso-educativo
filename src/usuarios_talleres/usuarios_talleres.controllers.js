@@ -1,5 +1,9 @@
 const UsuarioTaller = require('../models/usuariosTalleres.models');
 
+const getAllRelacionesUsuarioTaller = async () => {
+    return await UsuarioTaller.findAll();
+};
+
 const createRelacionUsuarioTaller = async (id_usuario, id_taller, estadoabierto = 'abierto', estadofinal = 'nofinalizado') => {
     const [relacion, created] = await UsuarioTaller.findOrCreate({
         where: { id_usuario, id_taller },
@@ -12,7 +16,6 @@ const createRelacionUsuarioTaller = async (id_usuario, id_taller, estadoabierto 
     });
     
     if (!created) {
-        // Si ya existía, actualizamos el estado
         await relacion.update({ estadoabierto, estadofinal });
     }
     
@@ -37,11 +40,11 @@ const changeEstadoTallerUsuario = async (id_usuario_taller, estadoabierto, estad
             }
         }
     );
-    return data[0]; // Retorna 1 si se actualizó, 0 si no
+    return data[0];
 };
 
-
 module.exports = {
+    getAllRelacionesUsuarioTaller,
     createRelacionUsuarioTaller,
     changeEstadoTallerUsuario
 };

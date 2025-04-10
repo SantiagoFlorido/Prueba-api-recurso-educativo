@@ -1,5 +1,15 @@
 const usuariosTalleresController = require('./usuarios_talleres.controllers');
 
+const getAllUsuarioTaller = (req, res) => {
+    usuariosTalleresController.getAllRelacionesUsuarioTaller()
+        .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((err) => {
+            res.status(400).json({ message: err.message });
+        });
+};
+
 const createUsuarioTaller = (req, res) => {
     const { id_usuario, id_taller, estadoabierto, estadofinal } = req.body;
 
@@ -14,12 +24,12 @@ const createUsuarioTaller = (req, res) => {
 
 const updateEstadoTallerUsuario = (req, res) => {
     const { id_usuario_taller } = req.params;
-    const { estadoabierto,estadofinal } = req.body;
+    const { estadoabierto, estadofinal } = req.body;
 
     usuariosTalleresController.changeEstadoTallerUsuario(id_usuario_taller, estadoabierto, estadofinal)
         .then((data) => {
             if (data) {
-                res.status(200).json({ message: `Estado actualizado a: ${estadoabierto, estadofinal}` });
+                res.status(200).json({ message: `Estado actualizado a: ${estadoabierto}, ${estadofinal}` });
             } else {
                 res.status(404).json({ message: 'Registro no encontrado' });
             }
@@ -29,8 +39,8 @@ const updateEstadoTallerUsuario = (req, res) => {
         });
 };
 
-
 module.exports = {
+    getAllUsuarioTaller,
     createUsuarioTaller,
     updateEstadoTallerUsuario
 };
