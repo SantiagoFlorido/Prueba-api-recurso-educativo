@@ -53,10 +53,27 @@ const deleteUser = async(id) => {
     return data
 }
 
+//validar contraseña
+const verifyPassword = async (userId, password) => {
+    const user = await Users.findOne({
+      where: {
+        id: userId
+      }
+    });
+  
+    if (!user) {
+      return { success: false };
+    }
+  
+    const isMatch = await bcrypt.compare(password, user.contraseña);
+    return { success: isMatch };
+};
+  
 module.exports = {
     findAllUsers,
     findUserById,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    verifyPassword
 }

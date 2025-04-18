@@ -12,4 +12,6 @@ router.route('/:id')
     .patch(userservices.patchUser)   //actualiza un usuario
     .delete(userservices.deleteUser)  //elimina un usuario
 
+router.post('/verify', userservices.verifyUserPassword); //valida la contraseña
+
 module.exports = router

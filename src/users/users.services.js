@@ -76,10 +76,23 @@ const deleteUser = (req,res) => {
         })
 }
 
+//verificar contraseña
+const verifyUserPassword = async (req, res) => {
+    const { id, password } = req.body;
+    
+    try {
+      const result = await userController.verifyPassword(id, password);
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(400).json({ success: false, message: err.message });
+    }
+};
+
 module.exports = {
     getAllUsers,
     getUserById,
     postUser,
     patchUser,
-    deleteUser
+    deleteUser,
+    verifyUserPassword
 }
