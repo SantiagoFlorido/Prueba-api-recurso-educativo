@@ -13,7 +13,7 @@ const db = require('../utils/database')
 
 const User = db.define('usuarios',{
     id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         autoIncrement: true,
         primaryKey: true
     },

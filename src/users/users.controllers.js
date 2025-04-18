@@ -1,4 +1,6 @@
 const Users = require('../models/users.models')
+const bcrypt = require('bcrypt')
+const uuid = require('uuid')
 
 //get all users
 const findAllUsers = async() => {
@@ -9,8 +11,8 @@ const findAllUsers = async() => {
 // get user {id}
 const findUserById = async(id) => {
     const user = await Users.findOne({
-        where:{
-            id:id
+        where: {
+            id: id
         }
     })
     return user
@@ -18,19 +20,24 @@ const findUserById = async(id) => {
 
 // create user
 const createUser = async(obj) => {
-    const newUser = await Users.create({ //nombre, contraseña, rol
+    const hashedPassword = await bcrypt.hash(obj.contraseña, 10)
+    const newUser = await Users.create({
+        id: uuid.v4(),
         nombre: obj.nombre,
-        contraseña: obj.contraseña,
+        contraseña: hashedPassword,
         rol: obj.rol
     })
     return newUser
 }
 
 // update user
-const updateUser = async(id,obj) => {
-    const data = await Users.update(obj,{
-        where:{
-            id:id
+const updateUser = async(id, obj) => {
+    if(obj.contraseña){
+        obj.contraseña = await bcrypt.hash(obj.contraseña, 10)
+    }
+    const data = await Users.update(obj, {
+        where: {
+            id: id
         }
     })
     return data[0]
@@ -39,14 +46,14 @@ const updateUser = async(id,obj) => {
 //delete user
 const deleteUser = async(id) => {
     const data = await Users.destroy({
-        where:{
-            id:id
+        where: {
+            id: id
         }
     })
     return data
 }
 
-module.exports={
+module.exports = {
     findAllUsers,
     findUserById,
     createUser,
