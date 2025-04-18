@@ -18,7 +18,7 @@ const UsuarioTaller = db.define('usuarios_talleres', {
         
     },
     id_usuario: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: false,
         references: {
             model: 'usuarios', // Nombre de la tabla en la BD

@@ -15,7 +15,8 @@ const User = db.define('usuarios',{
     id: {
         type: DataTypes.UUID,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
+        
     },
     nombre: {
         type: DataTypes.STRING(200),
